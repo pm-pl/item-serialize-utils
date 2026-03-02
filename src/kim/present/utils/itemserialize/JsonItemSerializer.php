@@ -85,6 +85,7 @@ final class JsonItemSerializer implements ItemSerializer{
         return array_map(self::deserializeItemJson(...), json_decode($contents, true));
     }
 
+    /** @return array<string, mixed> */
     private static function serializeItemJson(Item $item) : array{
         $tag = self::serializeItemTag($item);
         $json = [
@@ -105,6 +106,7 @@ final class JsonItemSerializer implements ItemSerializer{
         return $json;
     }
 
+    /** @param array<string, mixed> $json */
     private static function deserializeItemJson(array $json) : Item{
         $tag = new CompoundTag();
         $tag->setByte(SavedItemStackData::TAG_COUNT, $json[SavedItemStackData::TAG_COUNT]);
