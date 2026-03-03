@@ -96,12 +96,12 @@ final class JsonItemSerializer implements ItemSerializer{
 
         $block = $tag->getCompoundTag(SavedItemData::TAG_BLOCK);
         if($block !== null){
-            $json[SavedItemData::TAG_BLOCK] = NbtSerializer::toSNBT($block);
+            $json[SavedItemData::TAG_BLOCK] = NbtSerializer::toSnbt($block);
         }
 
         $namedTag = $tag->getCompoundTag(SavedItemData::TAG_TAG);
         if($namedTag !== null){
-            $json[SavedItemData::TAG_TAG] = NbtSerializer::toSNBT($namedTag);
+            $json[SavedItemData::TAG_TAG] = NbtSerializer::toSnbt($namedTag);
         }
         return $json;
     }
@@ -114,10 +114,10 @@ final class JsonItemSerializer implements ItemSerializer{
         $tag->setShort(SavedItemData::TAG_DAMAGE, $json[SavedItemData::TAG_DAMAGE]);
 
         if(isset($json[SavedItemData::TAG_BLOCK])){
-            $tag->setTag(SavedItemData::TAG_BLOCK, NbtSerializer::fromSNBT($json[SavedItemData::TAG_BLOCK]));
+            $tag->setTag(SavedItemData::TAG_BLOCK, NbtSerializer::fromSnbt($json[SavedItemData::TAG_BLOCK]));
         }
         if(isset($json[SavedItemData::TAG_TAG])){
-            $tag->setTag(SavedItemData::TAG_TAG, NbtSerializer::fromSNBT($json[SavedItemData::TAG_TAG]));
+            $tag->setTag(SavedItemData::TAG_TAG, NbtSerializer::fromSnbt($json[SavedItemData::TAG_TAG]));
         }
 
         return self::deserializeItemTag($tag);
