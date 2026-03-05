@@ -47,7 +47,11 @@ final class JsonItemSerializer implements ItemSerializer{
      * @return string JSON contents
      */
     public static function serialize(Item $item) : string{
-        return self::encodeToUTF8(json_encode(self::serializeItemJson($item)));
+        $encoded = json_encode(self::serializeItemJson($item));
+        if($encoded === false){
+            throw new \RuntimeException('json_encode failed');
+        }
+        return self::encodeToUTF8($encoded);
     }
 
     /**
@@ -71,7 +75,12 @@ final class JsonItemSerializer implements ItemSerializer{
      * @return string
      */
     public static function serializeList(iterable $items) : string{
-        return self::encodeToUTF8(json_encode(array_map(self::serializeItemJson(...), $items)));
+        $arr = $items instanceof \Traversable ? iterator_to_array($items) : $items;
+        $encoded = json_encode(array_map(self::serializeItemJson(...), $arr));
+        if($encoded === false){
+            throw new \RuntimeException('json_encode failed');
+        }
+        return self::encodeToUTF8($encoded);
     }
 
     /**

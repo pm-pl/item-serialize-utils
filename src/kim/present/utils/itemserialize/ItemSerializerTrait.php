@@ -108,7 +108,9 @@ trait ItemSerializerTrait{
 
     /** Convert the contents to UTF-8 encoding */
     protected static function encodeToUTF8(string $contents) : string{
-        return mb_convert_encoding($contents, "UTF-8", mb_detect_encoding($contents));
+        $from = mb_detect_encoding($contents);
+        $toUtf8 = mb_convert_encoding($contents, 'UTF-8', $from !== false ? $from : 'UTF-8');
+        return $toUtf8 !== false ? $toUtf8 : $contents;
     }
 
     /** Serialize the item to the compound tag */
